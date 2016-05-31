@@ -11,7 +11,7 @@ WHITE = (255, 255, 255)
 class TextPrint:
     def __init__(self):
         self.reset()
-        self.font = pygame.font.Font(None, 20)
+        self.font = pygame.font.Font(None, 30)
 
     def printing(self, screen, textString):
         textBitmap = self.font.render(textString, True, BLACK)
