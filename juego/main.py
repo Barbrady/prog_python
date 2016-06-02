@@ -1,19 +1,21 @@
 import pygame,sys
+from pantallas import *
 from pygame.locals import *
 
-ALTO = 640
-ANCHO = 800
+ALTO = 1024
+ANCHO = 1280
 
 class Personaje(pygame.sprite.Sprite):
-    def __init__(self,fichero):
+    def __init__(self,fichero,posicion):
         self.imagen = cargar_imagen(fichero,True)
         self.derecha = True
         self.izquierda = False
         self.rectangulo = self.imagen.get_rect()
-        self.rectangulo.centerx = 100
-        self.rectangulo.centery = 100
+        self.rectangulo.centerx = posicion[0]
+        self.rectangulo.centery = posicion[1]
         self.rect = self.rectangulo
-        self.velocidad = [0.5, 0.5]
+        self.velocidad = [0.3, 0.3]
+        self.situacion = (self.rectangulo.centerx,self.rectangulo.centery)
 
     def mover(self, tiempo, teclas):
         if self.rectangulo.top >= 0:
@@ -52,11 +54,13 @@ def cargar_imagen(fichero, transparente=False):
         imagen.set_colorkey(color, RLEACCEL)
     return imagen
 def main():
-    pantalla = pygame.display.set_mode((ANCHO,ALTO))
-    fondo = cargar_imagen("./imagenes/fondo.png")
-    queco = Personaje("./imagenes/queco.png")
-    bomba = Personaje("./imagenes/bomba.png")
-    bomba.situar((300,300))
+    screen = pygame.display.set_mode((ANCHO,ALTO))
+    #fondo = cargar_imagen("./imagenes/fondo_pantalla2.png")
+    queco = Personaje("./imagenes/queco.png",(50,50))
+    bomba = Personaje("./imagenes/bomba.png",(300,300))
+    #bomba.situar((300,300))
+    items = (queco,bomba)
+    pantalla = Pantalla1(screen)
     clock = pygame.time.Clock()
     pygame.mixer.music.load("./sound/bso.ogg")
     pygame.mixer.music.play()
@@ -67,10 +71,11 @@ def main():
             if eventos.type == QUIT:
                 sys.exit(0)
         queco.mover(tiempo,teclas)
-        pantalla.blit(fondo,(0,0))
-        pantalla.blit(bomba.imagen,bomba.rectangulo)
-        pantalla.blit(queco.imagen,queco.rectangulo)
-        if pygame.sprite.collide_rect(queco,bomba): sys.exit(0)
+        pantalla.actualizar(items)
+        #pantalla.blit(fondo,(0,0))
+        #pantalla.blit(bomba.imagen,bomba.rectangulo)
+        #pantalla.blit(queco.imagen,queco.rectangulo)
+        if pygame.sprite.collide_rect(queco,bomba): pantalla = Pantalla2(screen)
         pygame.display.flip()
     return 0
 
