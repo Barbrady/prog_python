@@ -13,6 +13,8 @@ class Pantalla():
         self.screen.blit(self.fondo, (0, 0))
         for i in self.items:
             self.screen.blit(i.imagen, i.rect)
+    def get_items(self):
+        return self.items
 
 class Pantalla1(Pantalla):
     def __init__(self,screen):
@@ -20,7 +22,8 @@ class Pantalla1(Pantalla):
         Pantalla.__init__(self,screen,self.fondo)
         bomba1 = Bomba((150,100))
         bomba2 = Bomba((400,600))
-        self.items = [bomba1,bomba2]
+        seta1 = Seta((800,800))
+        self.items = self.items+[bomba1,bomba2,seta1]
 class Pantalla2(Pantalla):
     def __init__(self,screen):
         self.fondo = pygame.image.load("./imagenes/fondo_pantalla2.png")

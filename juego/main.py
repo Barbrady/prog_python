@@ -1,4 +1,4 @@
-import pygame,sys
+import pygame,sys, types
 from pantallas import *
 from pygame.locals import *
 from items import *
@@ -20,6 +20,7 @@ def main():
     #bomba.situar((300,300))
     items = [queco]
     pantalla = Pantalla1(screen)
+    items = pantalla.get_items()
     clock = pygame.time.Clock()
     pygame.mixer.music.load("./sound/bso.ogg")
     pygame.mixer.music.play()
@@ -30,11 +31,16 @@ def main():
             if eventos.type == QUIT:
                 sys.exit(0)
         queco.mover(tiempo,teclas)
-        pantalla.actualizar(items)
+        #pantalla.actualizar(items)
+        screen.blit(pantalla.fondo,(0,0))
+        screen.blit(queco.imagen,queco.rect)
+        for i in items:
+            screen.blit(i.imagen,i.rect)
+            if isinstance(i, Bomba) and queco.rect.colliderect(i.rect): sys.exit(0)
         #pantalla.blit(fondo,(0,0))
         #pantalla.blit(bomba.imagen,bomba.rectangulo)
         #pantalla.blit(queco.imagen,queco.rectangulo)
-
+        print(clock.get_fps())
         pygame.display.flip()
     return 0
 

@@ -22,6 +22,9 @@ class Item(pygame.sprite.Sprite):
 class Bomba(Item):
     def __init__(self,posicion):
         Item.__init__(self,"./imagenes/bomba.png",posicion)
+class Seta(Item):
+    def __init__(self,posicion):
+        Item.__init__(self,"./imagenes/seta.png",posicion)
 class Personaje(Item):
     def __init__(self,fichero_imagen,posicion):
         Item.__init__(self,fichero_imagen,posicion)
