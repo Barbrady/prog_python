@@ -14,6 +14,7 @@ def cargar_imagen(fichero, transparente=False):
     return imagen
 def main():
     screen = pygame.display.set_mode((ANCHO,ALTO))
+    pygame.display.set_caption("Videojuego")
     #fondo = cargar_imagen("./imagenes/fondo_pantalla2.png")
     queco = Protagonista("./imagenes/queco.png",(50,50))
     #bomba = Personaje("./imagenes/bomba.png",(300,300))
